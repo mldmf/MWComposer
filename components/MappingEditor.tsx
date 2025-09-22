@@ -864,6 +864,37 @@ function PlaylistMatrix({ mapping, setMapping }:{mapping:Mapping; setMapping:(m:
     return result;
   };
 
+  const hasAdjacentDuplicate = (list: string[]) => {
+    for (let i = 1; i < list.length; i++) {
+      if (list[i] === list[i - 1]) return true;
+    }
+    return false;
+  };
+
+  const randomizePlaylist = (items: string[]) => {
+    if (items.length <= 1) return items;
+    const originalKey = items.join("\u0000");
+
+    const attemptWithGreedy = spreadPlaylist(items);
+    if (attemptWithGreedy.join("\u0000") !== originalKey && !hasAdjacentDuplicate(attemptWithGreedy)) {
+      return attemptWithGreedy;
+    }
+
+    const attemptLimit = 24;
+    for (let attempt = 0; attempt < attemptLimit; attempt++) {
+      const candidate = [...items];
+      for (let i = candidate.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [candidate[i], candidate[j]] = [candidate[j], candidate[i]];
+      }
+      if (candidate.join("\u0000") === originalKey) continue;
+      if (hasAdjacentDuplicate(candidate)) continue;
+      return candidate;
+    }
+
+    return attemptWithGreedy;
+  };
+
   const shuffleSource = (srcIdx: number) => {
     const n = deepClone(mapping);
     const s = n.sources[srcIdx];
@@ -874,7 +905,8 @@ function PlaylistMatrix({ mapping, setMapping }:{mapping:Mapping; setMapping:(m:
     const empties = arr.filter(v => !v).length;
     const items = arr.filter(v => !!v) as string[];
     if (items.length <= 1) { setMapping(n); return; }
-    const shuffled = spreadPlaylist(items);
+    const shuffled = randomizePlaylist(items);
+    if (shuffled.join("\u0000") === items.join("\u0000")) { setMapping(n); return; }
     s.playlists[p] = [...shuffled, ...Array(empties).fill("")];
     setMapping(n);
   };
@@ -916,11 +948,18 @@ function PlaylistMatrix({ mapping, setMapping }:{mapping:Mapping; setMapping:(m:
           <div className="overflow-x-auto">
             <div className="min-w-[640px]">
               {(() => {
-                // Build per-source options and count maps
-                const perSourceOptions: string[][] = mapping.sources.map(s => {
-                  const root = s.media_root || "";
-                  const opts = root ? (fileCache[root] || []) : [];
-                  return opts;
+                // Build per-source selections and count maps based on the active playlist only
+                const perSourceSelections: string[][] = mapping.sources.map(s => {
+                  const arr = (s.playlists?.[profile] || []).filter(Boolean);
+                  const seen = new Set<string>();
+                  const unique: string[] = [];
+                  arr.forEach(name => {
+                    if (!seen.has(name)) {
+                      seen.add(name);
+                      unique.push(name);
+                    }
+                  });
+                  return unique;
                 });
                 const perSourceCounts: Map<string, number>[] = mapping.sources.map(s => {
                   const arr = (s.playlists?.[profile] || []).filter(Boolean);
@@ -936,7 +975,12 @@ function PlaylistMatrix({ mapping, setMapping }:{mapping:Mapping; setMapping:(m:
                   const root = s.media_root || "";
                   return root ? (errorRoots[root] || "") : "";
                 });
-                const maxRows = Math.max(1, ...perSourceOptions.map(a => a.length));
+                const perSourceFiles: Record<number, string[]> = mapping.sources.reduce((acc, s, idx) => {
+                  const root = s.media_root || "";
+                  acc[idx] = root ? (fileCache[root] || []) : [];
+                  return acc;
+                }, {} as Record<number, string[]>);
+                const maxRows = Math.max(1, ...perSourceSelections.map(a => a.length));
                 const gridTemplate = [`80px`].concat(
                   ...mapping.sources.map(_s => [`minmax(200px,1fr)`, `56px`])
                 ).join(" ");
@@ -979,9 +1023,12 @@ function PlaylistMatrix({ mapping, setMapping }:{mapping:Mapping; setMapping:(m:
                           const root = s.media_root || "";
                           const loading = perSourceLoading[colIdx];
                           const error = perSourceError[colIdx];
-                          const options = perSourceOptions[colIdx] || [];
-                          const name = options[rowIdx] || "";
+                          const selections = perSourceSelections[colIdx] || [];
+                          const name = selections[rowIdx] || "";
                           const count = name ? (perSourceCounts[colIdx].get(name) || 0) : 0;
+                          const availableFiles = perSourceFiles[colIdx] || [];
+                          const hasFetchedRoot = root ? Object.prototype.hasOwnProperty.call(fileCache, root) : false;
+                          const missingFile = !!name && hasFetchedRoot && !availableFiles.includes(name);
                           return (
                             <React.Fragment key={colIdx}>
                               <div className="py-1 px-2">
@@ -1000,6 +1047,9 @@ function PlaylistMatrix({ mapping, setMapping }:{mapping:Mapping; setMapping:(m:
                                     title={name}
                                   >
                                     <span className="truncate">{name}</span>
+                                    {missingFile && (
+                                      <span className="text-xs text-red-500">nicht im Verzeichnis</span>
+                                    )}
                                     {/* rechter Bereich bleibt leer, Count kommt in Nachbarspalte */}
                                   </div>
                                 ) : (
