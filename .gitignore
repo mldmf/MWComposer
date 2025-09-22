@@ -1,0 +1,29 @@
+node_modules
+
+# Next.js build artifacts
+.next/
+out/
+.turbo/
+
+# Env files
+.env
+.env.*
+
+# Package manager logs
+pnpm-debug.log*
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# Tooling / coverage
+coverage/
+dist/
+
+# Editor & OS metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Deployment configs
+.vercel/

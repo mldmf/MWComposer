@@ -1,0 +1,214 @@
+{
+  "canvas": {
+    "w": 3840,
+    "h": 2160
+  },
+  "fps": 60,
+  "loop": true,
+  "active_profile": "TV-On",
+  "profiles": [
+    "TV-On",
+    "TV-Off",
+    "Exklusiv"
+  ],
+  "sources": [
+    {
+      "media_root": "/Users/miladmafi/Code/pyPlayer/media/11904",
+      "playlists": {
+        "TV-On": [
+          "RPGG_Matchwinners_2025v1.3.mp4",
+          "RPGG_Neobet_v2025v1.1.mp4",
+          "RPGG_enercity_2025v1.0.mp4",
+          "GG_DankanSponsoren_2025v1.0.mp4",
+          "RPGG_KUHLMANN_2025v1.0.mp4",
+          "RPGG_Contitental_2025_V1.mp4",
+          "Q1"
+        ],
+        "TV-Off": [
+          "RPGG_Dr. Buhmann v2025v1.1.mp4",
+          "RPGG_RKS_2025v1.1.mp4",
+          "RPGG_Contitental_2025_V1.mp4"
+        ],
+        "Exklusiv": [
+          "RPGG_enercity_2025v1.0.mp4",
+          "GG_DankanSponsoren_2025v1.0.mp4"
+        ]
+      },
+      "active": "TV-On",
+      "source": {
+        "w": 11904,
+        "h": 108
+      },
+      "zones": [
+        {
+          "src": {
+            "x": 0,
+            "y": 0,
+            "w": 3840,
+            "h": 108
+          },
+          "dst": {
+            "x": 0,
+            "y": 0,
+            "w": 3840,
+            "h": 108
+          }
+        },
+        {
+          "src": {
+            "x": 3840,
+            "y": 0,
+            "w": 3840,
+            "h": 108
+          },
+          "dst": {
+            "x": 0,
+            "y": 108,
+            "w": 3840,
+            "h": 108
+          }
+        },
+        {
+          "src": {
+            "x": 7680,
+            "y": 0,
+            "w": 3840,
+            "h": 108
+          },
+          "dst": {
+            "x": 0,
+            "y": 216,
+            "w": 3840,
+            "h": 108
+          }
+        },
+        {
+          "src": {
+            "x": 11520,
+            "y": 0,
+            "w": 384,
+            "h": 108
+          },
+          "dst": {
+            "x": 0,
+            "y": 324,
+            "w": 384,
+            "h": 108
+          }
+        }
+      ],
+      "overlay": {
+        "media_root": "/Users/miladmafi/Code/pyPlayer/media/11904",
+        "playlist": [
+          "GG_Toranimation_2025v1.0.mp4"
+        ],
+        "loop": false,
+        "zones": "same"
+      }
+    },
+    {
+      "media_root": "/Users/miladmafi/Code/pyPlayer/media/3456",
+      "playlists": {
+        "TV-On": [
+          "TL_Matchwinners_2025v1.3.mp4",
+          "TL(rechts)_Neobet_v2025v1.1.mp4",
+          "TL_enercity_rechts_V1.mp4",
+          "TL(rechts)_DankanSponsoren_2025v1.0.mp4",
+          "TL_Matchwinners_2025v1.3.mp4",
+          "TL_Contitental_2025_V1.mp4",
+          "Q2"
+        ],
+        "TV-Off": [
+          "TL(rechts)_Neobet_v2025v1.1.mp4",
+          "TL_Matchwinners_2025v1.3.mp4",
+          "TL_Contitental_2025_V1.mp4"
+        ],
+        "Exklusiv": [
+          "TL_enercity_rechts_V1.mp4",
+          "TL(rechts)_DankanSponsoren_2025v1.0.mp4"
+        ]
+      },
+      "active": "TV-On",
+      "source": {
+        "w": 3456,
+        "h": 108
+      },
+      "zones": [
+        {
+          "src": {
+            "x": 0,
+            "y": 0,
+            "w": 3456,
+            "h": 108
+          },
+          "dst": {
+            "x": 384,
+            "y": 324,
+            "w": 3456,
+            "h": 108
+          }
+        }
+      ],
+      "overlay": {
+        "media_root": "/Users/miladmafi/Code/pyPlayer/media/3456",
+        "playlist": [
+          "TL_Toranimation_2025v1.0.mp4"
+        ],
+        "loop": false,
+        "zones": "same"
+      }
+    },
+    {
+      "media_root": "/Users/miladmafi/Code/pyPlayer/media/3456",
+      "playlists": {
+        "TV-On": [
+          "TL_Matchwinners_2025v1.3.mp4",
+          "TL(links)_Neobet_v2025v1.1.mp4",
+          "TL_enercity_links_V1.mp4",
+          "TL(links)_DankanSponsoren_2025v1.0.mp4",
+          "TL_Matchwinners_2025v1.3.mp4",
+          "TL_Contitental_2025_V1.mp4",
+          "Q3"
+        ],
+        "TV-Off": [
+          "TL(links)_Neobet_v2025v1.1.mp4",
+          "TL_Matchwinners_2025v1.3.mp4",
+          "TL_Contitental_2025_V1.mp4"
+        ],
+        "Exklusiv": [
+          "TL_enercity_links_V1.mp4",
+          "TL(links)_DankanSponsoren_2025v1.0.mp4"
+        ]
+      },
+      "active": "TV-On",
+      "source": {
+        "w": 3456,
+        "h": 108
+      },
+      "zones": [
+        {
+          "src": {
+            "x": 0,
+            "y": 0,
+            "w": 3456,
+            "h": 108
+          },
+          "dst": {
+            "x": 0,
+            "y": 432,
+            "w": 3456,
+            "h": 108
+          }
+        }
+      ],
+      "overlay": {
+        "media_root": "/Users/miladmafi/Code/pyPlayer/media/3456",
+        "playlist": [
+          "TL_Toranimation_2025v1.0.mp4"
+        ],
+        "loop": false,
+        "zones": "same"
+      }
+    }
+  ]
+}
